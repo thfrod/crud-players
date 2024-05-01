@@ -50,6 +50,7 @@ class PlayerController extends Controller
     public function show(Player $player)
     {
         //
+        return view('players.show')->with('player', $player);
     }
 
     /**
@@ -69,6 +70,17 @@ class PlayerController extends Controller
     public function update(Request $request, Player $player)
     {
         //
+
+        // dd($request);
+        $player->name = $request->name;
+        $player->photo = $request->photo;
+        $player->age = $request->age;
+        $player->birthdate = $request->birthdate;
+        $player->current_team_id = $request->current_team;
+        $player->revealed_team_id = $request->revealed_team;
+        $player->update();
+        return to_route('players.index');
+
     }
 
     /**
@@ -79,6 +91,5 @@ class PlayerController extends Controller
         //
         $player->delete();
         return to_route('players.index');
-
     }
 }

@@ -13,7 +13,7 @@
             </a>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
                 @if (count($players))
-                    <table class="table-auto md:table-fixed w-full">
+                    <table class="table-fixed w-full">
                         <thead>
                             <tr>
                                 <th>{{ __('Photo') }}</th>
@@ -29,31 +29,22 @@
                         <tbody>
                             @foreach ($players as $player)
                                 <tr>
+
                                     <td class="text-center align-middle">
-                                        <img src="{{ $player->photo }}" alt="Foto do jogador"
-                                            class="w-16 object-contain mx-auto rounded-full">
+                                        <a href="{{ route('players.show', $player) }}">
+                                            <img src="{{ $player->photo }}" alt="Foto do jogador"
+                                                class="w-16 object-contain mx-auto rounded-full">
+                                        </a>
+
                                     </td>
                                     <td class="text-center align-middle">{{ $player->name }}</td>
                                     <td class="text-center align-middle">{{ $player->age }}</td>
                                     <td class="text-center align-middle">{{ $player->birthdate }}</td>
                                     <td class="text-center align-middle">
-                                        @if ($player->currentTeam)
-                                            <img src="{{ $player->currentTeam->badge }}" alt="Escudo do time atual"
-                                                class="w-16 object-contain mx-auto">
-                                            {{ $player->currentTeam->name }}
-                                        @else
-                                            No Registers
-                                        @endif
+                                        {{ $player ? $player->currentTeam->name : 'No Registers' }}
                                     </td>
                                     <td class="text-center align-middle">
-                                        @if ($player->revealedTeam)
-                                            <img src="{{ $player->revealedTeam->badge }}"
-                                                alt="Escudo do time em que foi revelado"
-                                                class="w-16 object-contain mx-auto">
-                                            {{ $player->revealedTeam->name }}
-                                        @else
-                                            No Registers
-                                        @endif
+                                        {{ $player ? $player->revealedTeam->name : 'No Registers' }}
                                     </td>
                                     <td class="flex ">
                                         <form method="POST" action="{{ route('players.destroy', $player) }}"
@@ -70,8 +61,6 @@
                                             </x-secondary-button>
                                         </a>
                                     </td>
-                                    {{-- <td>
-                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
