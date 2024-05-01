@@ -31,7 +31,17 @@ class PlayerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $player = [
+            'photo' => $request->photo,
+            'name' => $request->name,
+            'age' => $request->age,
+            'birthdate' => $request->birthdate,
+            'current_team_id' => $request->current_team,
+            'revealed_team_id' => $request->revealed_team,
+        ];
+
+        Player::create($player);
+        return to_route('players.index');
     }
 
     /**
@@ -48,6 +58,9 @@ class PlayerController extends Controller
     public function edit(Player $player)
     {
         //
+        $teams = Team::all();
+
+        return view('players.edit')->with(['player' => $player, 'teams' => $teams]);
     }
 
     /**
@@ -64,5 +77,8 @@ class PlayerController extends Controller
     public function destroy(Player $player)
     {
         //
+        $player->delete();
+        return to_route('players.index');
+
     }
 }
